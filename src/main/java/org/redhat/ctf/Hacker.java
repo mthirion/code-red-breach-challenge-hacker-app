@@ -73,8 +73,8 @@ public class Hacker {
     @Consumes(MediaType.WILDCARD) 
     @Produces(MediaType.TEXT_PLAIN)
     public String escape(@HeaderParam("x-api-key") String apikey) {
-		if (apikey!=null && apikey.equals(apikey)) {
-				LOG.info("[USER] succeeded");
+		if (apikey!=null && apikey.equals(api_key)) {
+			//LOG.info("[USER] succeeded");
 			return exploit;
 		}
 		return "{ error : 'access denied; x-api-key http header is incorrect or missing' }";
@@ -84,10 +84,10 @@ public class Hacker {
     @Consumes(MediaType.WILDCARD) 
     @Produces(MediaType.TEXT_PLAIN)
     public Response check(@HeaderParam("x-api-key") String apikey) {
-		if (apikey!=null && apikey.equals(apikey)) {
+		if (apikey!=null && apikey.equals(api_key)) {
 			//LOG.info("[USER] called / endpoint");
-			return Response.ok("{ endpoint: alive }")
-					.header("ctf-App-Service-Control", "/killswitch")
+			return Response.ok("{ \"server\": \"alive\", \"App-Control-Endpoint\": \"listening\" }")
+					.header("ctf-App-Control-Endpoint", "/killswitch")
 					.header("Cache-Control", "no-cache")
 					.build();
 		}
